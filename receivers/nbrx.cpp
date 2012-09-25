@@ -40,7 +40,7 @@ nbrx::nbrx(float quad_rate, float audio_rate)
     nb = make_rx_nb_cc(PREF_QUAD_RATE, 3.3, 2.5);
     filter = make_rx_filter(PREF_QUAD_RATE, -5000.0, 5000.0, 1000.0);
     agc = make_rx_agc_cc(PREF_QUAD_RATE, true, -100, 0, 2, 100, false);
-    sql = gr_make_simple_squelch_cc(-150.0, 0.001);
+    sql = gr_make_pwr_squelch_cc(-150.0, 0.1, 10, true);
     meter = make_rx_meter_c(DETECTOR_TYPE_RMS);
     demod_ssb = gr_make_complex_to_real(1);
     demod_fm = make_rx_demod_fm(PREF_QUAD_RATE, PREF_AUDIO_RATE, 5000.0, 75.0e-6);
