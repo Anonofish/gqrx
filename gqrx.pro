@@ -163,3 +163,5 @@ OTHER_FILES += \
 
 RESOURCES += \
     icons.qrc
+
+ICON=gqrx.icns
