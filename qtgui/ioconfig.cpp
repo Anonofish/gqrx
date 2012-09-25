@@ -31,7 +31,6 @@
 #include <osmosdr_ranges.h>
 #include <boost/foreach.hpp>
 
-#include "pulseaudio/pa_device_list.h"
 #include "qtgui/ioconfig.h"
 #include "ui_ioconfig.h"
 
