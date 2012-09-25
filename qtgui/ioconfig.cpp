@@ -194,8 +194,7 @@ void CIoConfig::saveConfig()
 
     if (idx > 0)
     {
-        qDebug() << "Output device" << idx << ":" << QString(outDevList[idx-1].get_name().c_str());
-        m_settings->setValue("output/device", QString(outDevList[idx-1].get_name().c_str()));
+
     }
     else
         qDebug() << "Selected output device is 'default' (not saving)";

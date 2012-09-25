@@ -23,7 +23,6 @@
 #include <QDialog>
 #include <QString>
 #include <QSettings>
-#include "pulseaudio/pa_device_list.h"
 
 
 namespace Ui {
@@ -54,7 +53,6 @@ private:
 
     QSettings *m_settings;
 
-    vector<pa_device> outDevList;
 };
 
 #endif // IOCONFIG_H

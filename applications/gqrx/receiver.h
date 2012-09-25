@@ -27,6 +27,7 @@
 #include <gr_wavfile_sink.h>
 #include <gr_wavfile_source.h>
 #include <gr_null_sink.h>
+#include <gr_audio_sink.h>
 
 #include <osmosdr_source_c.h>
 
@@ -41,9 +42,6 @@
 #include "dsp/sniffer_f.h"
 #include "dsp/resampler_xx.h"
 #include "receivers/receiver_base.h"
-
-#include <pulseaudio/pa_sink.h>
-#include <pulseaudio/pa_source.h>
 
 
 /*! \defgroup DSP Digital signal processing library based on GNU Radio */
@@ -209,7 +207,7 @@ private:
     sniffer_f_sptr            sniffer;    /*!< Sample sniffer for data decoders. */
     resampler_ff_sptr         sniffer_rr; /*!< Sniffer resampler. */
 
-    pa_sink_sptr              audio_snk;  /*!< Audio sink. */
+    audio_sink::sptr          audio_snk;  /*!< Audio sink. */
 
 };
 

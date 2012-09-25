@@ -22,6 +22,7 @@
 
 #include <gr_top_block.h>
 #include <gr_multiply_const_ff.h>
+#include <gr_audio_sink.h>
 
 #include <osmosdr_source_c.h>
 #include <osmosdr_ranges.h>
@@ -29,7 +30,6 @@
 #include "applications/gqrx/receiver.h"
 #include "dsp/correct_iq_cc.h"
 #include "dsp/rx_fft.h"
-#include "pulseaudio/pa_sink.h"
 #include "receivers/nbrx.h"
 #include "receivers/wfmrx.h"
 
@@ -73,7 +73,7 @@ receiver::receiver(const std::string input_device, const std::string audio_devic
     audio_gain0 = gr_make_multiply_const_ff(0.1);
     audio_gain1 = gr_make_multiply_const_ff(0.1);
 
-    audio_snk = make_pa_sink(audio_device, d_audio_rate, "GQRX", "Audio output");
+    audio_snk = audio_make_sink(d_audio_rate, audio_device, true);
 
     /* wav sink and source is created when rec/play is started */
     audio_null_sink = gr_make_null_sink(sizeof(float));
@@ -146,8 +146,7 @@ void receiver::set_output_device(const std::string device)
     tb->disconnect(audio_gain1, 0, audio_snk, 1);
 
     audio_snk.reset();
-    audio_snk = make_pa_sink(device, d_audio_rate); // FIXME: does this keep app and stream name?
-
+    audio_snk = audio_make_sink(d_audio_rate, device, true);
     tb->connect(audio_gain0, 0, audio_snk, 0);
     tb->connect(audio_gain1, 0, audio_snk, 1);
 
