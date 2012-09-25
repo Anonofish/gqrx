@@ -101,6 +101,7 @@ void receiver::start()
     {
         tb->start();
         d_running = true;
+	set_output_device("Internal Speakers");
     }
 }
 
@@ -112,6 +113,7 @@ void receiver::stop()
         tb->stop();
         tb->wait(); // If the graph is needed to run again, wait() must be called after stop
         d_running = false;
+	set_output_device("Internal Speakers");
     }
 }
 
@@ -165,6 +167,7 @@ double receiver::set_input_rate(double rate)
     rx->set_quad_rate(d_input_rate);
     lo->set_sampling_freq(d_input_rate);
     tb->unlock();
+    set_output_device("Internal Speakers");
 
     return d_input_rate;
 }
@@ -478,6 +481,7 @@ receiver::status receiver::set_demod(rx_demod demod)
     case RX_DEMOD_OFF:
         tb->disconnect_all();
         connect_all(RX_CHAIN_NONE);
+	set_output_device("Internal Speakers");
         break;
 
     case RX_DEMOD_NONE:
@@ -487,6 +491,7 @@ receiver::status receiver::set_demod(rx_demod demod)
             connect_all(RX_CHAIN_NBRX);
         }
         rx->set_demod(nbrx::NBRX_DEMOD_NONE);
+	set_output_device("Internal Speakers");
         break;
 
     case RX_DEMOD_AM:
@@ -496,6 +501,7 @@ receiver::status receiver::set_demod(rx_demod demod)
             connect_all(RX_CHAIN_NBRX);
         }
         rx->set_demod(nbrx::NBRX_DEMOD_AM);
+	set_output_device("Internal Speakers");
         break;
 
     case RX_DEMOD_NFM:
@@ -505,6 +511,7 @@ receiver::status receiver::set_demod(rx_demod demod)
             connect_all(RX_CHAIN_NBRX);
         }
         rx->set_demod(nbrx::NBRX_DEMOD_FM);
+	set_output_device("Internal Speakers");
         break;
 
     case RX_DEMOD_WFM_M:
@@ -514,6 +521,7 @@ receiver::status receiver::set_demod(rx_demod demod)
             connect_all(RX_CHAIN_WFMRX);
         }
         rx->set_demod(wfmrx::WFMRX_DEMOD_MONO);
+	set_output_device("Internal Speakers");
         break;
 
     case RX_DEMOD_WFM_S:
@@ -523,6 +531,7 @@ receiver::status receiver::set_demod(rx_demod demod)
             connect_all(RX_CHAIN_WFMRX);
         }
         rx->set_demod(wfmrx::WFMRX_DEMOD_STEREO);
+	set_output_device("Internal Speakers");
         break;
 
     case RX_DEMOD_SSB:
@@ -532,6 +541,7 @@ receiver::status receiver::set_demod(rx_demod demod)
             connect_all(RX_CHAIN_NBRX);
         }
         rx->set_demod(nbrx::NBRX_DEMOD_SSB);
+	set_output_device("Internal Speakers");
         break;
 
     default:
@@ -612,6 +622,7 @@ receiver::status receiver::start_audio_recording(const std::string filename)
     tb->connect(audio_gain1, 0, wav_sink, 1);
     tb->unlock();
     d_recording_wav = true;
+    set_output_device("Internal Speakers");
 
     std::cout << "Recording audio to " << filename << std::endl;
 
@@ -644,6 +655,7 @@ receiver::status receiver::stop_audio_recording()
     wav_sink.reset();
     tb->unlock();
     d_recording_wav = false;
+    set_output_device("Internal Speakers");
 
     std::cout << "Audio recorder stopped" << std::endl;
 
@@ -832,6 +844,7 @@ receiver::status receiver::start_sniffer(unsigned int samprate, int buffsize)
     tb->connect(sniffer_rr, 0, sniffer, 0);
     tb->unlock();
     d_sniffer_active = true;
+    set_output_device("Internal Speakers");
 
     return STATUS_OK;
 }
@@ -853,6 +866,7 @@ receiver::status receiver::stop_sniffer()
 
     /* delete resampler */
     sniffer_rr.reset();
+    set_output_device("Internal Speakers");
 
     return STATUS_OK;
 }
